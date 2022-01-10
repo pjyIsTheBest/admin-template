@@ -1,0 +1,49 @@
+/*less 全局公用混合方法*/
+
+@screenWidth: 1920; //设计稿页面宽度
+@screenHeight: 1080; //设计稿页面高度
+@baseFont: (100 / (@screenWidth / 100vw)); //根节点字体单位
+
+/*
+    自动转换vw，适用于有关宽度单位的设置
+    @attr：要设置的属性，如width
+    @px:传入设计稿中目标块的实际px数字，注意：传入的数字请不要带单位
+*/
+.px2vw (@attr, @px) {
+    @vw: (@px / @screenWidth) * 100;
+    @{attr}:~"@{vw}vw";
+}
+
+/*
+    自动转换vh，适用于有关高度单位的设置
+    @attr：要设置的属性，如height
+    @px:传入设计稿中目标块的实际px数字，注意：传入的数字请不要带单位
+*/
+.px2vh (@attr, @px) {
+    @vh: (@px / @screenHeight) * 100;
+    @{attr}:~"@{vh}vh";
+}
+
+/*字体自适应*/
+.fontsize(@px) {
+    @size: (@px / 100 * @baseFont);
+    font-size:~"@{size}";
+}
+
+//超出省略号
+.ellipsis() {
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+//多行超出省略号
+.ellipsisLine(@line : 2) {
+    word-break: break-all;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: @line;
+    overflow: hidden;
+}
