@@ -50,20 +50,20 @@
         </el-form-item>
         <el-form-item label="是否显示在菜单栏" prop="menu">
           <el-radio-group v-model="state.form.menu">
-            <el-radio :label="true">是</el-radio>
-            <el-radio :label="false">否</el-radio>
+            <el-radio :label="1">是</el-radio>
+            <el-radio :label="0">否</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="是否为layout子路由" prop="layout">
           <el-radio-group v-model="state.form.layout">
-            <el-radio :label="true">是</el-radio>
-            <el-radio :label="false">否</el-radio>
+            <el-radio :label="1">是</el-radio>
+            <el-radio :label="0">否</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="是否校验登录token" prop="validate">
           <el-radio-group v-model="state.form.validate">
-            <el-radio :label="true">是</el-radio>
-            <el-radio :label="false">否</el-radio>
+            <el-radio :label="1">是</el-radio>
+            <el-radio :label="0">否</el-radio>
           </el-radio-group>
         </el-form-item>
       </template>

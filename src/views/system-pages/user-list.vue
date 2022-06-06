@@ -42,10 +42,10 @@
     </el-table-column>
     <el-table-column label="角色">
       <template #default="scope">
-        <el-tag style="margin: 0 5px" size="small" v-if="scope.row.roleInfo">{{
-          scope.row.roleInfo.name
+        <el-tag style="margin: 0 5px" size="small">{{
+          scope.row.roleName
         }}</el-tag>
-        <span v-else>暂无</span>
+       
       </template>
     </el-table-column>
     <el-table-column label="是否可用">

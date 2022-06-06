@@ -241,7 +241,7 @@ watch(
         state.form.account = props.data.account;
         state.form.name = props.data.name;
         state.form.phone = props.data.phone;
-        state.form.role = props.data.role;
+        state.form.role = props.data.roleId;
         state.form.remarks = props.data.remarks;
       } else {
         state.form.account = "";

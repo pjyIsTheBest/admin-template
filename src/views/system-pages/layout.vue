@@ -104,7 +104,7 @@ const store = useStore(); //
 //将数组转换为树形结构
 const initTree = (data, parentId) => {
   return data
-    .filter((i) => i.parentId == parentId && i.menu)
+    .filter((i) => i.parentId == parentId && i.menu == 1)
     .sort((a, b) => a.order - b.order)
     .map((i) => {
       return {

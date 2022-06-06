@@ -46,7 +46,7 @@ const modules = import.meta.glob("../views/**/**.vue")
 //动态注册路由
 const addAsyncRoute = (menu) => {
     menu
-        .filter((i) => i.type == 1 && i.component && i.layout)
+        .filter((i) => i.type == 1 && i.component && i.layout == 1)
         .forEach((ele) => {
             router.addRoute("home", {
                 name: ele.name,
@@ -60,7 +60,7 @@ const addAsyncRoute = (menu) => {
         });
     //全局路由
     menu
-        .filter((i) => i.type == 1 && i.component && i.layout == false)
+        .filter((i) => i.type == 1 && i.component && i.layout == 0)
         .forEach((ele) => {
             router.addRoute({
                 name: ele.name,
@@ -87,7 +87,7 @@ router.beforeEach((to, from, next) => {
             if (res.code == 200) {
                 store.commit("menu/saveMenuData", res.data)
                 addAsyncRoute(res.data)
-                if (to.meta.validate) {
+                if (to.meta.validate == 1) {
                     let token = store.state.user.token;
                     if (token) {
                         next(to.fullPath)

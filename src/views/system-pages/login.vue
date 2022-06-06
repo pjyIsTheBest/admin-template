@@ -53,7 +53,7 @@ const store = useStore(); //
 const state = reactive({
   showSlideValidate: false,
   form: {
-    account: "admin",
+    account: "test",
     password: "1111qqqq",
     remember: true,
   },
