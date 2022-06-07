@@ -18,6 +18,10 @@ export default {
             state.userInfo = info;
             state.token = info.token;
             router.push("/home");
+        },
+        removeUserInfo(state) {
+            state.userInfo = {};
+            state.token = null;
         }
     },
     actions: {},

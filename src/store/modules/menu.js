@@ -1,4 +1,4 @@
-
+import util from '../../util/index';
 import router from '../../router/index'
 export default {
     namespaced: true,
@@ -18,10 +18,7 @@ export default {
             state.hasMenuData = false;
             state.menu = [];
         },
-        //登出
-        logOut(state) {
-            router.push("/login");
-            sessionStorage.removeItem("token");
+        removeMenuData(state) {
             state.menu
                 .filter((i) => i.component)
                 .forEach((ele) => {

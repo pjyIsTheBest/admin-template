@@ -161,12 +161,14 @@ const menuHandle = (index) => {
   }
 };
 //修改密码
-const toChangePwd = ()=>{
-  router.push({name:'updatePwd'})
-}
+const toChangePwd = () => {
+  router.push({ name: "updatePwd" });
+};
 //退出登录
 const logout = () => {
-  store.commit("menu/logOut");
+  store.commit("menu/removeMenuData");
+  store.commit("user/removeUserInfo");
+  router.push("/login");
 };
 //标签点击事件
 const clickTag = (tag) => {
