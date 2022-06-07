@@ -125,7 +125,7 @@ const getData = () => {
     .then((res) => {
       if (res.code == 200) {
         state.tableData.push(...res.data);
-        state.pagination.total = res.pages.total;
+        state.pagination.total = res.total;
       } else {
         ElMessage.error(res.msg);
       }
