@@ -4,7 +4,7 @@
 https://gitee.com/peng-jiangyong/node-serve
 #### 介绍
 管理系统前台模板
-## 线上地址
+## 线上体验地址
 http://42.192.11.55:8081/
 
 #### 软件架构
