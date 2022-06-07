@@ -20,6 +20,8 @@ export default {
             router.push("/home");
         },
         removeUserInfo(state) {
+            util.delCookie("token")
+            window.sessionStorage.removeItem("userInfo")
             state.userInfo = {};
             state.token = null;
         }
