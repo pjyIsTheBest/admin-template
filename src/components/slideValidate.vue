@@ -97,7 +97,7 @@ const props = defineProps({
 const emits = defineEmits(["success", "fail"]);
 
 const state = reactive({
-  showPiecce: false, //是否显示缺块和填块 是否展示loading
+  showPiecce: true, //是否显示缺块和填块 是否展示loading
   backgroundImgUrl: "", //填充的图片url
   gapPosition: [0, 0], //缺块的定位坐标
   slideLeft: 0, //滑动的距离
@@ -115,15 +115,15 @@ const loadSucess = () => {
 //图片加载失败
 const loadError = () => {
   setTimeout(() => {
-    state.backgroundImgUrl = `https://picsum.photos/id/${random(0, 99)}/${
+    state.backgroundImgUrl = `https://picsum.photos/id/${random(0, 1000)}/${
       props.width
     }/${props.height - 50}/?random=${random(1000, 10000)}`;
-  });
+  },500);
 };
 //刷新
 const refresh = () => {
   state.showPiecce = false;
-  state.backgroundImgUrl = `https://picsum.photos/id/${random(0, 99)}/${
+  state.backgroundImgUrl = `https://picsum.photos/id/${random(0, 1000)}/${
     props.width
   }/${props.height - 50}/?random=${random(1000, 10000)}`;
   state.gapPosition = [0, 0];
