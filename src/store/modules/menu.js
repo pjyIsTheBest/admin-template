@@ -5,14 +5,20 @@ export default {
     state: () => {
         return {
             menu: [],
-            hasMenuData: false
+            hasMenuData: false,
+            btnKey: [],
         }
+    },
+    getter(state) {
+        return state.btnKey
     },
     mutations: {
         saveMenuData(state, data) {
             state.hasMenuData = true;
-            state.menu = data;
-
+            //保存非按钮菜单数据
+            state.menu = data.filter(i => i.type != 3);
+            //保存所有按钮的key
+            state.btnKey = data.filter(i => i.type == 3).map(i => i.name)
         },
         resetMenu(state) {
             state.hasMenuData = false;
@@ -26,6 +32,8 @@ export default {
                 });
             state.hasMenuData = false;
             state.menu = [];
-        }
+            state.btnKey = [];
+        },
+
     },
 }

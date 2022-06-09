@@ -1,6 +1,7 @@
 <!-- 角色列表 -->
 <template>
   <el-form :inline="true" :model="state.searchForm" size="small">
+   <div style="display:inline-block" v-btnAuth="`role-find`">
     <el-form-item label="名称">
       <el-input
         v-model="state.searchForm.name"
@@ -10,8 +11,9 @@
     <el-form-item>
       <el-button type="primary" @click="onSubmit">查询</el-button>
     </el-form-item>
+   </div>
     <el-form-item>
-      <el-button @click="add">添加角色</el-button>
+      <el-button @click="add" v-btnAuth="`role-add`">添加角色</el-button>
     </el-form-item>
   </el-form>
   <el-table :data="state.tableData" style="width: 100%" border>
@@ -44,18 +46,19 @@
     <el-table-column label="备注" prop="remarks" />
     <el-table-column fixed="right" label="操作" width="150">
       <template #default="scope">
-        <el-button type="text" size="small">
+        <el-button type="text" size="small" v-btnAuth="`role-menu2role`">
           <span style="color: #909399" @click="menu2role(scope.row)"
             >分配权限</span
           >
         </el-button>
-        <el-button type="text" size="small" @click="edit(scope.row)">
+        <el-button type="text" size="small" @click="edit(scope.row)" v-btnAuth="`role-update`">
           <span style="color: #e6a23c">修改</span>
         </el-button>
         <el-button
           type="text"
           size="small"
           v-if="scope.row.id != 1"
+           v-btnAuth="`role-delete`"
           @click="del(scope.row)"
         >
           <span style="color: #f56c6c">删除</span>

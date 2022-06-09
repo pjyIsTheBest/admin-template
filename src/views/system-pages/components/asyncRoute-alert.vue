@@ -16,13 +16,18 @@
           <el-option label="菜单标题（存在下级菜单页）" :value="0"></el-option>
           <el-option label="菜单页（无下级菜单）" :value="1"></el-option>
           <el-option label="外部链接" :value="2"></el-option>
+          <el-option label="按钮" :value="3"></el-option>
         </el-select>
       </el-form-item>
 
       <el-form-item label="标题" prop="title">
         <el-input v-model="state.form.title" placeholder="菜单标题"></el-input>
       </el-form-item>
-      <el-form-item label="地址" prop="path" v-if="state.form.type != 0">
+      <el-form-item
+        label="地址"
+        prop="path"
+        v-if="state.form.type == 2 || state.form.type == 1"
+      >
         <el-input
           v-model="state.form.path"
           placeholder="显示在浏览器地址栏的url,以'/'开头,外部链接以'http'开头"
@@ -45,7 +50,7 @@
             v-model="state.form.component"
             placeholder="相对src/views下的路径，如'system-page/demo.vue'"
           >
-           <template #prepend>src/views/</template>
+            <template #prepend>src/views/</template>
           </el-input>
         </el-form-item>
         <el-form-item label="是否显示在菜单栏" prop="menu">
@@ -67,6 +72,12 @@
           </el-radio-group>
         </el-form-item>
       </template>
+      <el-form-item label="唯一key" prop="name" v-if="state.form.type == 3">
+        <el-input
+          v-model="state.form.name"
+          placeholder="请确保key值的唯一性"
+        ></el-input>
+      </el-form-item>
     </el-form>
     <template #footer>
       <div class="dialog-footer">
@@ -124,9 +135,9 @@ const state = reactive({
     name: "",
     path: "",
     component: "",
-    menu: true,
-    layout: true,
-    validate: true,
+    menu: 1,
+    layout: 1,
+    validate: 1,
   },
   rules: {
     type: [
@@ -256,7 +267,16 @@ watch(
         };
       }
     } else {
-      form.value.resetFields();
+      state.form = {
+        type: 1,
+        title: "",
+        name: "",
+        path: "",
+        component: "",
+        menu: 1,
+        layout: 1,
+        validate: 1,
+      };
     }
   }
 );

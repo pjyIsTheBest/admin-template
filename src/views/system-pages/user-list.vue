@@ -1,29 +1,31 @@
 <!-- 用户列表 -->
 <template>
   <el-form :inline="true" :model="state.searchForm" size="small">
-    <el-form-item label="账号">
-      <el-input
-        v-model="state.searchForm.account"
-        placeholder="请输入账号"
-      ></el-input>
-    </el-form-item>
-    <el-form-item label="用户名称">
-      <el-input
-        v-model="state.searchForm.name"
-        placeholder="请输入用户名称"
-      ></el-input>
-    </el-form-item>
-    <el-form-item label="联系方式">
-      <el-input
-        v-model="state.searchForm.phone"
-        placeholder="请输入联系方式"
-      ></el-input>
-    </el-form-item>
+    <div style="display:inline-block" v-btnAuth="`user-find`">
+      <el-form-item label="账号">
+        <el-input
+          v-model="state.searchForm.account"
+          placeholder="请输入账号"
+        ></el-input>
+      </el-form-item>
+      <el-form-item label="用户名称">
+        <el-input
+          v-model="state.searchForm.name"
+          placeholder="请输入用户名称"
+        ></el-input>
+      </el-form-item>
+      <el-form-item label="联系方式">
+        <el-input
+          v-model="state.searchForm.phone"
+          placeholder="请输入联系方式"
+        ></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="onSubmit">查询</el-button>
+      </el-form-item>
+    </div>
     <el-form-item>
-      <el-button type="primary" @click="onSubmit">查询</el-button>
-    </el-form-item>
-    <el-form-item>
-      <el-button @click="add">添加用户</el-button>
+      <el-button @click="add" v-btnAuth="`user-add`">添加用户</el-button>
     </el-form-item>
   </el-form>
   <el-table :data="state.tableData" style="width: 100%" border>
@@ -45,7 +47,6 @@
         <el-tag style="margin: 0 5px" size="small">{{
           scope.row.roleName
         }}</el-tag>
-       
       </template>
     </el-table-column>
     <el-table-column label="是否可用">
@@ -74,6 +75,7 @@
           type="text"
           size="small"
           v-if="scope.row.status == '01'"
+          v-btnAuth="`user-disable`"
           @click="updateStatus(scope.row.id, '03')"
           >禁用</el-button
         >
@@ -81,6 +83,7 @@
           type="text"
           size="small"
           v-if="scope.row.status == '02'"
+          v-btnAuth="`user-normal`"
           @click="updateStatus(scope.row.id, '01')"
           >解锁</el-button
         >
@@ -88,6 +91,7 @@
           type="text"
           size="small"
           v-if="scope.row.status == '01'"
+          v-btnAuth="`user-lock`"
           @click="updateStatus(scope.row.id, '02')"
           >锁定</el-button
         >
@@ -95,16 +99,18 @@
           type="text"
           size="small"
           v-if="scope.row.status == '03'"
+          v-btnAuth="`user-allow`"
           @click="updateStatus(scope.row.id, '01')"
           >启用</el-button
         >
-        <el-button type="text" size="small">
+        <el-button type="text" size="small" v-btnAuth="`user-update`">
           <span style="color: #e6a23c" @click="edit(scope.row)">修改</span>
         </el-button>
         <el-button
           type="text"
           size="small"
           v-if="scope.row.id != 1"
+          v-btnAuth="`user-delete`"
           @click="del(scope.row)"
         >
           <span style="color: #f56c6c">删除</span>
@@ -230,6 +236,5 @@ const updateStatus = (id, status) => {
     }
   });
 };
-
 </script>
 <style scoped lang="less"></style>

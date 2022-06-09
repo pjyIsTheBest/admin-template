@@ -23,6 +23,7 @@
               title="新增子节点"
               @click="addNode(node, data)"
               v-if="!data.isLeaf"
+              v-btnAuth="`async-add`"
               ><el-icon class="el-icon--right" color="#409EFF"><Plus /></el-icon
             ></el-button>
             <el-button
@@ -30,12 +31,14 @@
               type="text"
               title="修改当前节点"
               @click="editNode(node, data)"
+              v-btnAuth="`async-update`"
               ><el-icon class="el-icon--right" color="#E6A23C"><Edit /></el-icon
             ></el-button>
             <el-button
               v-if="data.id != 0"
               type="text"
               title="删除当前节点和所有子节点"
+              v-btnAuth="`async-delete`"
               @click="delNode(node, data)"
               ><el-icon class="el-icon--right" color="#F56C6C"
                 ><Delete /></el-icon
@@ -95,7 +98,7 @@ const loadNode = async (node, resolve) => {
             label: i.title,
             id: i.id,
             extData: i,
-            isLeaf: i.type != 0,
+            isLeaf: i.type == 2 || i.type == 3,
           };
         })
     );
