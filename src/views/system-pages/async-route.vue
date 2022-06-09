@@ -16,7 +16,10 @@
     >
       <template #default="{ node, data }">
         <div class="custom-tree-node">
-          <span>{{ node.label }}</span>
+          <el-tag size="small" v-if="data.type && data.type == 3" style="margin:2px 0">{{
+            node.label
+          }}</el-tag>
+          <span v-else>{{ node.label }}</span>
           <span>
             <el-button
               type="text"
@@ -98,6 +101,7 @@ const loadNode = async (node, resolve) => {
             label: i.title,
             id: i.id,
             extData: i,
+            type: i.type,
             isLeaf: i.type == 2 || i.type == 3,
           };
         })
@@ -201,5 +205,8 @@ const confirm = () => {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+/deep/ .el-tree-node__content{
+  height: auto;
 }
 </style>
