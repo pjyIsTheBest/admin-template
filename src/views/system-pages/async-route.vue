@@ -16,7 +16,7 @@
     >
       <template #default="{ node, data }">
         <div class="custom-tree-node">
-          <el-tag size="small" v-if="data.type && data.type == 3" style="margin:2px 0">{{
+          <el-tag size="small" v-if="data.type && data.type == 3">{{
             node.label
           }}</el-tag>
           <span v-else>{{ node.label }}</span>
@@ -207,6 +207,6 @@ const confirm = () => {
   align-items: center;
 }
 /deep/ .el-tree-node__content{
-  height: auto;
+  height: 30px;
 }
 </style>
