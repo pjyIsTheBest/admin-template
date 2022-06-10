@@ -83,7 +83,14 @@
               >{{ i.title }}</el-breadcrumb-item
             >
           </el-breadcrumb>
-          <router-view />
+
+          <router-view v-slot="{ Component }">
+            <transition name="fade">
+              <div :key="state.route.name">
+                <component :is="Component"></component>
+              </div>
+            </transition>
+          </router-view>
         </div>
       </el-main>
     </el-container>
@@ -143,6 +150,7 @@ const state = reactive({
   isCollapse: false,
   tree: initTree(menuData.value, 0), //菜单树
   breadcrumb: [], //面包屑数据,
+  route,
 });
 //用户名
 let userName = computed(() => store.state.user.userInfo.name);

@@ -1,0 +1,15 @@
+/**过度动画 fade*/
+.fade-enter-from {
+  opacity: 0;
+}
+.fade-leave-to {
+  display: none;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1s ease;
+}
+.fade-enter-to,
+.fade-leave-from {
+  opacity: 1;
+}

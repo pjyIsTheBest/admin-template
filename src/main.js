@@ -4,6 +4,9 @@ import App from './App.vue'
 import ElementPlus from 'element-plus'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import 'element-plus/dist/index.css'
+
+import './assets/common.css'
+
 import routes from './router/index'
 import store from './store/index'
 import directive from './directives/index'
