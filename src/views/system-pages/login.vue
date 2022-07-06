@@ -3,7 +3,6 @@
     <template #header>
       <div class="card-header">
         <span>登录</span>
-        <el-button class="button" type="text">前往注册</el-button>
       </div>
     </template>
     <el-form
