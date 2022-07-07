@@ -5,17 +5,9 @@
         <span>登录</span>
       </div>
     </template>
-    <el-form
-      ref="loginForm"
-      :model="state.form"
-      :rules="state.rules"
-      label-width="120px"
-    >
+    <el-form ref="loginForm" :model="state.form" :rules="state.rules" label-width="120px">
       <el-form-item label="账号" prop="account">
-        <el-input
-          v-model="state.form.account"
-          placeholder="请输入登录账号"
-        ></el-input>
+        <el-input v-model="state.form.account" placeholder="请输入登录账号"></el-input>
       </el-form-item>
       <el-form-item label="密码" prop="password">
         <el-input
@@ -26,17 +18,18 @@
         ></el-input>
       </el-form-item>
       <el-form-item>
-        <el-checkbox
-          v-model="state.form.remember"
-          label="记住密码"
-        ></el-checkbox>
+        <el-checkbox v-model="state.form.remember" label="记住密码"></el-checkbox>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click.prevent="onSubmit">登录</el-button>
       </el-form-item>
     </el-form>
   </el-card>
-  <SlideValidate :show="state.showSlideValidate" @success="validateSuccess" />
+  <SlideValidate
+    :show="state.showSlideValidate"
+    @success="validateSuccess"
+    @close="closeSlideValidate"
+  />
 </template>
 
 <script setup>
@@ -86,6 +79,10 @@ const onSubmit = () => {
 const validateSuccess = () => {
   state.showSlideValidate = false;
   login();
+};
+//关闭验证
+const closeSlideValidate = () => {
+  state.showSlideValidate = false;
 };
 const login = () => {
   api.login(state.form).then((res) => {

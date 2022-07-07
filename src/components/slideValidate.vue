@@ -3,6 +3,7 @@
   <div
     class="mask"
     :style="{ zIndex: props.zIndex, display: props.show ? 'block' : 'none' }"
+    @click.self="clickMask"
   >
     <div
       class="slideValidate"
@@ -17,6 +18,7 @@
         }"
       >
         <img
+          v-if="state.backgroundImgUrl"
           :src="state.backgroundImgUrl"
           alt=""
           @load="loadSucess"
@@ -94,7 +96,7 @@ const props = defineProps({
     default: false,
   },
 });
-const emits = defineEmits(["success", "fail"]);
+const emits = defineEmits(["success", "fail",'close']);
 
 const state = reactive({
   showPiecce: true, //是否显示缺块和填块 是否展示loading
@@ -118,14 +120,14 @@ const loadError = () => {
     state.backgroundImgUrl = `https://picsum.photos/id/${random(0, 1000)}/${
       props.width
     }/${props.height - 50}/?random=${random(1000, 10000)}`;
-  },500);
+  }, 500);
 };
 //刷新
 const refresh = () => {
   state.showPiecce = false;
-  state.backgroundImgUrl = `https://picsum.photos/id/${random(0, 1000)}/${
-    props.width
-  }/${props.height - 50}/?random=${random(1000, 10000)}`;
+  state.backgroundImgUrl = `https://picsum.photos/id/${random(0, 1000)}/${props.width}/${
+    props.height - 50
+  }/?random=${random(1000, 10000)}`;
   state.gapPosition = [0, 0];
   state.slideLeft = 0;
   state.handleText = "";
@@ -166,6 +168,9 @@ const mouseup = () => {
     }, 1000);
   }
 };
+const clickMask = ()=>{
+  emits("close")
+}
 watch(
   () => props.show,
   (val) => {
@@ -192,6 +197,7 @@ watch(
       background-size: 100% 100%;
       background-position: center;
       position: relative;
+      background-color: #fff;
       img {
         display: block;
         width: 100%;
@@ -203,9 +209,9 @@ watch(
         width: 50px;
         height: 50px;
         position: absolute;
-        background-color: rgba(255, 255, 255, 0.7);
+        background-color: rgba(255, 255, 255, 0.9);
         z-index: 3;
-        box-shadow: 0 0 -10px #000;
+        box-shadow: 0 0 10px #000;
       }
       .fill {
         width: 50px;
