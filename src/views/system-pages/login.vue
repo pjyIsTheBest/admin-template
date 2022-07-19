@@ -5,9 +5,17 @@
         <span>登录</span>
       </div>
     </template>
-    <el-form ref="loginForm" :model="state.form" :rules="state.rules" label-width="120px">
+    <el-form
+      ref="loginForm"
+      :model="state.form"
+      :rules="state.rules"
+      label-width="120px"
+    >
       <el-form-item label="账号" prop="account">
-        <el-input v-model="state.form.account" placeholder="请输入登录账号"></el-input>
+        <el-input
+          v-model="state.form.account"
+          placeholder="请输入登录账号"
+        ></el-input>
       </el-form-item>
       <el-form-item label="密码" prop="password">
         <el-input
@@ -18,13 +26,17 @@
         ></el-input>
       </el-form-item>
       <el-form-item>
-        <el-checkbox v-model="state.form.remember" label="记住密码"></el-checkbox>
+        <el-checkbox
+          v-model="state.form.remember"
+          label="记住密码"
+        ></el-checkbox>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click.prevent="onSubmit">登录</el-button>
       </el-form-item>
     </el-form>
   </el-card>
+  <p class="beian">苏ICP备2022026147号</p>
   <SlideValidate
     :show="state.showSlideValidate"
     @success="validateSuccess"
@@ -108,5 +120,14 @@ const login = () => {
     justify-content: space-between;
     align-items: center;
   }
+}
+.beian{
+  width: 100%;
+  line-height: 40px;
+  color: rgba(0,0,0,.8);
+  text-align: center;
+  position: fixed;
+  left: 0;
+  bottom: 10px;
 }
 </style>
