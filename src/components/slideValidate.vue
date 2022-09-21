@@ -7,23 +7,17 @@
   >
     <div
       class="slideValidate"
-      :style="{ width: `${props.width}px`, height: `${props.height}px` }"
+      :style="{ width: `${props.width}px`, height: `${props.height+50}px` }"
       v-loading="!state.showPiecce"
     >
       <div
         class="container"
         :style="{
           width: `${props.width}px`,
-          height: `${props.height - 50}px`,
+          height: `${props.height}px`,
         }"
       >
-        <img
-          v-if="state.backgroundImgUrl"
-          :src="state.backgroundImgUrl"
-          alt=""
-          @load="loadSucess"
-          @error="loadError"
-        />
+        <img :src="state.backgroundImgUrl" alt="" />
         <div
           class="gap"
           v-show="state.showPiecce"
@@ -38,7 +32,7 @@
           v-show="state.showPiecce"
           :style="{
             position: 'absolute',
-            left: state.slideLeft + 'px',
+            left: state.offsetLeft + state.slideLeft + 'px',
             top: state.gapPosition[1] + 'px',
             'background-image': `url(${state.backgroundImgUrl})`,
             'background-position': `-${state.gapPosition[0]}px -${state.gapPosition[1]}px`,
@@ -104,39 +98,38 @@ const state = reactive({
     `../assets/img/img${random(0, 10)}.jpeg`,
     import.meta.url
   ).href, //填充的图片url
-  gapPosition: [0, 0], //缺块的定位坐标
+  gapPosition: [
+    random(props.width / 2, props.width - 60),
+    random(10, props.height - 110),
+  ], //缺块的定位坐标
   slideLeft: 0, //滑动的距离
+  offsetLeft: random(10, props.width / 2 - 60),
   handleText: "", //滑动条反馈文案
   slideBg: "#409EFF", //滑动条反馈颜色
 });
-//图片加载完成
-const loadSucess = () => {
-  state.showPiecce = true;
-  state.gapPosition = [
-    random(props.width / 2, props.width - 60),
-    random(10, props.height - 110),
-  ];
-};
-//图片加载失败
-const loadError = () => {
-  setTimeout(() => {
-    state.backgroundImgUrl = new URL(
-      `../assets/img/img${random(0, 10)}.jpeg`,
-      import.meta.url
-    ).href;
-  }, 500);
-};
+
 //刷新
 const refresh = () => {
   state.showPiecce = false;
-  state.backgroundImgUrl = new URL(
-    `../assets/img/img${random(0, 10)}.jpeg`,
-    import.meta.url
-  ).href;
+  let url = new URL(`../assets/img/img${random(0, 10)}.jpeg`, import.meta.url)
+    .href;
+  if (url == state.backgroundImgUrl) {
+    refresh();
+    return;
+  }
+  state.backgroundImgUrl = url;
   state.gapPosition = [0, 0];
   state.slideLeft = 0;
   state.handleText = "";
   state.slideBg = "#409EFF";
+  setTimeout(() => {
+    state.showPiecce = true;
+    state.offsetLeft = random(10, props.width / 2 - 60);
+    state.gapPosition = [
+      random(props.width / 2, props.width - 60),
+      random(10, props.height - 110),
+    ];
+  }, 500);
 };
 //暴露方法，便于在父组件中手动刷新
 defineExpose({
@@ -157,7 +150,8 @@ const move = (e) => {
 const mouseup = () => {
   document.onmousemove = null;
   //校验是否滑动正确 误差在5px范围内即表示成功
-  let isOk = Math.abs(state.slideLeft - state.gapPosition[0]) < 5;
+  let isOk =
+    Math.abs(state.slideLeft - state.gapPosition[0] + state.offsetLeft) < 5;
   if (isOk) {
     state.handleText = "验证通过";
     state.slideBg = "#67C23A";
@@ -174,6 +168,7 @@ const mouseup = () => {
   }
 };
 const clickMask = () => {
+  refresh()
   emits("close");
 };
 watch(
@@ -197,6 +192,7 @@ watch(
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    user-select: none;
     .container {
       background-repeat: no-repeat;
       background-size: 100% 100%;
@@ -224,6 +220,7 @@ watch(
         position: absolute;
         z-index: 4;
         box-shadow: 0 0 10px #000;
+        background-size: auto;
       }
     }
     .bar {
