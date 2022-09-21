@@ -81,11 +81,11 @@ const random = (min, max) => {
 const props = defineProps({
   width: {
     type: Number,
-    default: 300,
+    default: 600,
   },
   height: {
     type: Number,
-    default: 200,
+    default: 400,
   },
   zIndex: {
     type: Number,
@@ -96,11 +96,14 @@ const props = defineProps({
     default: false,
   },
 });
-const emits = defineEmits(["success", "fail",'close']);
+const emits = defineEmits(["success", "fail", "close"]);
 
 const state = reactive({
   showPiecce: true, //是否显示缺块和填块 是否展示loading
-  backgroundImgUrl: "", //填充的图片url
+  backgroundImgUrl: new URL(
+    `../assets/img/img${random(0, 10)}.jpeg`,
+    import.meta.url
+  ).href, //填充的图片url
   gapPosition: [0, 0], //缺块的定位坐标
   slideLeft: 0, //滑动的距离
   handleText: "", //滑动条反馈文案
@@ -117,17 +120,19 @@ const loadSucess = () => {
 //图片加载失败
 const loadError = () => {
   setTimeout(() => {
-    state.backgroundImgUrl = `https://picsum.photos/id/${random(0, 1000)}/${
-      props.width
-    }/${props.height - 50}/?random=${random(1000, 10000)}`;
+    state.backgroundImgUrl = new URL(
+      `../assets/img/img${random(0, 10)}.jpeg`,
+      import.meta.url
+    ).href;
   }, 500);
 };
 //刷新
 const refresh = () => {
   state.showPiecce = false;
-  state.backgroundImgUrl = `https://picsum.photos/id/${random(0, 1000)}/${props.width}/${
-    props.height - 50
-  }/?random=${random(1000, 10000)}`;
+  state.backgroundImgUrl = new URL(
+    `../assets/img/img${random(0, 10)}.jpeg`,
+    import.meta.url
+  ).href;
   state.gapPosition = [0, 0];
   state.slideLeft = 0;
   state.handleText = "";
@@ -168,9 +173,9 @@ const mouseup = () => {
     }, 1000);
   }
 };
-const clickMask = ()=>{
-  emits("close")
-}
+const clickMask = () => {
+  emits("close");
+};
 watch(
   () => props.show,
   (val) => {
