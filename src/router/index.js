@@ -13,6 +13,12 @@ const routes = [
         meta: { title: '登录' }
     },
     {
+        name: 'desktop',
+        path: '/desktop',
+        component: () => import('../views/system-pages/desktop.vue'),
+        meta: { title: '桌面' }
+    },
+    {
         name: 'home',
         path: '/home',
         redirect: '/home/index',

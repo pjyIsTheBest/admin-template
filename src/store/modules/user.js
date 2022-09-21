@@ -17,7 +17,7 @@ export default {
             util.setCookie('token', info.token)
             state.userInfo = info;
             state.token = info.token;
-            router.push("/home");
+            router.push("/desktop");
         },
         removeUserInfo(state) {
             util.delCookie("token")
