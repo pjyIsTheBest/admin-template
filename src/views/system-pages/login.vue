@@ -36,7 +36,9 @@
       </el-form-item>
     </el-form>
   </el-card>
-  <p class="beian">苏ICP备2022026147号</p>
+  <a class="beian" target="_blank" href="https://beian.miit.gov.cn/"
+    >苏ICP备2022026147号</a
+  >
   <SlideValidate
     :show="state.showSlideValidate"
     @success="validateSuccess"
@@ -121,10 +123,11 @@ const login = () => {
     align-items: center;
   }
 }
-.beian{
+.beian {
+  display: block;
   width: 100%;
   line-height: 40px;
-  color: rgba(0,0,0,.8);
+  color: rgba(0, 0, 0, 0.8);
   text-align: center;
   position: fixed;
   left: 0;
