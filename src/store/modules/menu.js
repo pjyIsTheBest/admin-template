@@ -7,10 +7,13 @@ export default {
             menu: [],
             hasMenuData: false,
             btnKey: [],
+            parentId: sessionStorage.getItem("parentId") || 0,
         }
     },
-    getter(state) {
-        return state.btnKey
+    getters: {
+        btnKey(state) {
+            return state.btnKey
+        },
     },
     mutations: {
         saveMenuData(state, data) {
@@ -34,6 +37,9 @@ export default {
             state.menu = [];
             state.btnKey = [];
         },
-
+        saveParentId(state, val) {
+            sessionStorage.setItem("parentId", val)
+            state.parentId = val;
+        }
     },
 }

@@ -89,7 +89,7 @@ const addAsyncRoute = (menu) => {
 router.beforeEach((to, from, next) => {
     if ((to.matched.length == 0 || to.matched[0].name == 'home') && !store.state.menu.hasMenuData) {
         //获取菜单
-        api.getMenus().then(res => {
+        api.getMenus(store.state.menu.parentId).then(res => {
             if (res.code == 200) {
                 store.commit("menu/saveMenuData", res.data)
                 addAsyncRoute(res.data)

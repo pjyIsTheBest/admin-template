@@ -6,8 +6,8 @@ export default {
         return axios.post("/user/login", params)
     },
     //查询用户菜单
-    getMenus() {
-        return axios.get("/menu/findByUser")
+    getMenus(parentId = 0) {
+        return axios.get("/menu/findAllByUserAndParentId", { params: { parentId } })
     },
     //根据父节点id查询子节点
     getMenusByParentId(parentId) {
@@ -88,5 +88,9 @@ export default {
     //修改密码
     changePwd({ oldPwd, newPwd }) {
         return axios.post("/user/changePwd", { oldPwd, newPwd })
+    },
+    //根据用户权限和父节点id查询对应子节点
+    findByUserAndParentId(parentId) {
+        return axios.get("/menu/findByUserAndParentId", { params: { parentId } })
     }
 }

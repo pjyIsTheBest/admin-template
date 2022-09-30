@@ -11,7 +11,6 @@
         border-bottom: 1px solid #f1f1f1;
       "
     >
-      
       <el-button type="text" @click="() => (showDrawer = !showDrawer)">
         <el-icon>
           <Fold v-if="!showDrawer" />
@@ -35,45 +34,69 @@
       <div class="desktop">
         <div
           class="menu"
-          v-for="item in menus"
+          v-for="item in state.menus"
           :key="item.id"
-          @click="openSystem(item.id)"
+          @click="openSystem(item)"
         >
           {{ item.title }}
         </div>
       </div>
     </el-main>
   </el-container>
-  <el-drawer :size="size" :modal="true" v-model="showDrawer" title="I am the title" direction="btt">
+  <el-drawer
+    :size="size"
+    :modal="true"
+    v-model="showDrawer"
+    title="I am the title"
+    direction="btt"
+  >
     <span>Hi, there!</span>
   </el-drawer>
 </template>
 <script setup>
 import { Fold, Expand } from "@element-plus/icons";
-import { ref, reactive, computed } from "vue";
+import { ref, reactive, computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
+import { ElMessage } from "element-plus";
+import api from "./api";
 const router = useRouter(); //路由实例
 const store = useStore(); //
 const showDrawer = ref(false);
 const size = ref(document.body.offsetHeight - 60);
 //用户名
 let userName = computed(() => store.state.user.userInfo.name);
-const menus = reactive([
-  { id: 1, title: "系统管理" },
-  { id: 2, title: "社区管理" },
-  { id: 3, title: "设备管理" },
-  { id: 4, title: "物业管理" },
-  { id: 5, title: "客户管理" },
-]);
+let state = reactive({
+  menus: [],
+});
 const logout = () => {
   store.commit("menu/removeMenuData");
   store.commit("user/removeUserInfo");
   router.push("/login");
 };
-const openSystem = () => {
-  router.push("/home");
+const openSystem = (menu) => {
+  if (menu.type == 0) {
+    //移除菜单路由
+    store.commit("menu/removeMenuData");
+    store.commit("menu/saveParentId", menu.id);
+    router.push("/home");
+  } else if (menu.type == 2) {
+    window.open(menu.path);
+  }
 };
+
+const getData = () => {
+  api.findByUserAndParentId().then((res) => {
+    if (res.code == 200) {
+      state.menus = [...res.data];
+    } else {
+      ElMessage.error(res.msg);
+    }
+  });
+};
+onMounted(() => {
+  getData();
+});
 </script>
 <style scoped lang='less'>
 .desktop {

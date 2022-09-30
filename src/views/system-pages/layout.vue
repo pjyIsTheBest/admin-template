@@ -148,7 +148,7 @@ let activeMenu = computed(() => {
 const tags = reactive([{ title: "首页", name: "home", menu: true, type: 1 }]);
 const state = reactive({
   isCollapse: false,
-  tree: initTree(menuData.value, 0), //菜单树
+  tree: initTree(menuData.value, store.state.menu.parentId), //菜单树
   breadcrumb: [], //面包屑数据,
   route,
 });
