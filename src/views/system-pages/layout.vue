@@ -102,7 +102,6 @@ import api from "./api";
 import { reactive, computed, watch, watchEffect, toRaw } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useStore } from "vuex";
-import { House, Fold, Expand } from "@element-plus/icons";
 import MenuItem from "./components/layout-menu.vue";
 
 const router = useRouter(); //路由实例

@@ -18,7 +18,6 @@
   </template>
 </template>
 <script setup>
-import { FolderOpened, Document, Link } from "@element-plus/icons";
 const props = defineProps({
   tree: {
     type: Array,

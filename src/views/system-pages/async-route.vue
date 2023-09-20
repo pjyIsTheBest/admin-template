@@ -66,7 +66,6 @@
 <script setup>
 import { ref, reactive } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
-import { Plus, Edit, Delete } from "@element-plus/icons";
 import api from "./api/index";
 import Alert from "./components/asyncRoute-alert.vue";
 

@@ -67,7 +67,6 @@
 </template>
 <script setup>
 import { reactive, watch } from "vue";
-import { Right } from "@element-plus/icons";
 //生成范围随机数
 const random = (min, max) => {
   return Math.round(Math.random() * (max - min) + min);
