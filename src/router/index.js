@@ -1,91 +1,97 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import api from '../views/system-pages/api'
 import store from '../store/index'
-const routes = [
-    {
+const routes = [{
         path: '/',
-        redirect: '/login',
+        component: () =>
+            import ('../views/polygonEditor.vue'),
+        meta: { title: '网格边界采集器' }
     },
     {
         name: 'login',
         path: '/login',
-        component: () => import('../views/system-pages/login.vue'),
+        component: () =>
+            import ('../views/system-pages/login.vue'),
         meta: { title: '登录' }
     },
     {
         name: 'desktop',
         path: '/desktop',
-        component: () => import('../views/system-pages/desktop.vue'),
+        component: () =>
+            import ('../views/system-pages/desktop.vue'),
         meta: { title: '桌面' }
     },
     {
         name: 'home',
         path: '/home',
         redirect: '/home/index',
-        component: () => import('../views/system-pages/layout.vue'),
-        children: [
-            {
-                name: 'home',
-                path: '/home/index',
-                component: () => import('../views/system-pages/home.vue'),
-                meta: {
-                    title: '首页',
-                    validate: true
-                }
-            },
-        ],
+        component: () =>
+            import ('../views/system-pages/layout.vue'),
+        children: [{
+            name: 'home',
+            path: '/home/index',
+            component: () =>
+                import ('../views/system-pages/home.vue'),
+            meta: {
+                title: '首页',
+                validate: true
+            }
+        }, ],
 
     },
     {
         name: '404',
         path: '/404',
-        component: () => import('../views/system-pages/404.vue'),
+        component: () =>
+            import ('../views/system-pages/404.vue'),
         meta: { title: '404' }
     }
 ];
 const router = createRouter({
-    history: createWebHistory(import.meta.env.BASE_URL),
+    history: createWebHistory(
+        import.meta.env.BASE_URL),
     routes
 })
 
-const modules = import.meta.glob("../views/**/**.vue")
-//动态注册路由
+const modules =
+    import.meta.glob("../views/**/**.vue")
+    //动态注册路由
 const addAsyncRoute = (menu) => {
-    menu
-        .filter((i) => i.type == 1 && i.component && i.layout == 1)
-        .forEach((ele) => {
-            router.addRoute("home", {
-                name: ele.name,
-                path: ele.path,
-                component: modules[`../views/${ele.component}`],
-                meta: {
-                    title: ele.title,
-                    validate: ele.validate,
-                },
+        menu
+            .filter((i) => i.type == 1 && i.component && i.layout == 1)
+            .forEach((ele) => {
+                router.addRoute("home", {
+                    name: ele.name,
+                    path: ele.path,
+                    component: modules[`../views/${ele.component}`],
+                    meta: {
+                        title: ele.title,
+                        validate: ele.validate,
+                    },
+                });
             });
-        });
-    //全局路由
-    menu
-        .filter((i) => i.type == 1 && i.component && i.layout == 0)
-        .forEach((ele) => {
-            router.addRoute({
-                name: ele.name,
-                path: ele.path,
-                component: modules[`../views/${ele.component}`],
-                meta: {
-                    title: ele.title,
-                    validate: ele.validate,
-                },
+        //全局路由
+        menu
+            .filter((i) => i.type == 1 && i.component && i.layout == 0)
+            .forEach((ele) => {
+                router.addRoute({
+                    name: ele.name,
+                    path: ele.path,
+                    component: modules[`../views/${ele.component}`],
+                    meta: {
+                        title: ele.title,
+                        validate: ele.validate,
+                    },
+                });
             });
-        });
-    // router.addRoute({
-    //     path: '/*',
-    //     redirect: '/404',
+        // router.addRoute({
+        //     path: '/*',
+        //     redirect: '/404',
 
-    // })
+        // })
 
-}
-//全局导航守卫 校验登录
+    }
+    //全局导航守卫 校验登录
 router.beforeEach((to, from, next) => {
     if ((to.matched.length == 0 || to.matched[0].name == 'home') && !store.state.menu.hasMenuData) {
         //获取菜单
